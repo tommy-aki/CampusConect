@@ -8,7 +8,7 @@ module.exports = {
       correo: 'j.manuel@yahoo.com',
       carrera: 'Ingenieria en Sistemas',
       password: 'admin11'
-    }])
+    }], {});
     /**
      * Add seed commands here.
      *
