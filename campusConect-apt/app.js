@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var swaggerUI = require('swagger-ui-express');
+var swaggerJsDoc = require('swagger-jsdoc');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,6 +23,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
+
+const options = {
+  definition: {
+    openapi: "3.0.3",
+    info: {
+      title: "Campus Conect Api Documentation",
+      version : "0.1"
+    },
+    servers: [
+      {url: "https://localhost:3000/api"} 
+    ],
+  },
+  apis: ["./routes/*.js"]
+}
+
+const specs = swaggerJsDoc(options);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
