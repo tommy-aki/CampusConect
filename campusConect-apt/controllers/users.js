@@ -3,6 +3,7 @@ const {Usuarios} = require('../models')
 const createNewUser = async (request, response) => {
     try{
         const data = request.body;
+        console.log(data)
         if (!data || Object.keys(data).length === 0) {
             return response.status(400).json({
                 status: "Error",
@@ -10,13 +11,14 @@ const createNewUser = async (request, response) => {
             });
         }
         const check = await Usuarios.findOne({
-            correo: data.correo
+            where: {correo: data.correo}
         });
+        console.log("Check:", check)
         if (!check){
             const newUser = await Usuarios.create(request.body);
             response.status(201).json({
                 status: "Success",
-                mesage: newUser
+                message: newUser
             })
         }
         else {
